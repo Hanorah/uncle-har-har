@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @property --scroll-y-position {
+            syntax: "<percentage>";
+            initial-value: -10%;
+            inherits: false;
+        }
+
+        @property --reflection-y-position {
+            syntax: "<percentage>";
+            initial-value: -50%;
+            inherits: false;
+        }
+
+        @property --scrollbar-color {
+            syntax: "<color>";
+            inherits: false;
+            initial-value: transparent;
+        }
+
+        @property --opacity-1 {
+            syntax: "<number>";
+            inherits: false;
+            initial-value: 0.1;
+        }
+
+        @property --opacity-2 {
+            syntax: "<number>";
+            inherits: false;
+            initial-value: 0.1;
+        }
+
+        @property --opacity-3 {
+            syntax: "<number>";
+            inherits: false;
+            initial-value: 0.1;
+        }
+
+        @property --opacity-4 {
+            syntax: "<number>";
+            inherits: false;
+            initial-value: 0.1;
+        }
+
+        @property --text-offset-1 {
+            syntax: "<number>";
+            inherits: false;
+            initial-value: 10;
+        }
+
+        @property --text-offset-2 {
+            syntax: "<number>";
+            inherits: false;
+            initial-value: 10;
+        }
+
+        @property --text-offset-3 {
+            syntax: "<number>";
+            inherits: false;
+            initial-value: 10;
+        }
+
+        @property --text-offset-4 {
+            syntax: "<number>";
+            inherits: false;
+            initial-value: 10;
+        }
+
+        html::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            margin: 0;
+            background: black;
+            height: 900px;
+            font-family: sans-serif;
+        }
+
+        .scrollbar {
+            width: 4px;
+            height: 100%;
+            background-color: var(--scrollbar-color);
+            background-image: radial-gradient(circle at 0% var(--scroll-y-position),
+                    rgb(112, 153, 255) 0%,
+                    rgba(56, 106, 249, 0.79135) 10px,
+                    rgba(10, 76, 242, 0.53) 20px,
+                    rgba(255, 255, 255, 0) 40px,
+                    rgba(49, 49, 49, 0) 100%);
+            animation: on-scrolling both linear;
+            animation-timeline: scroll();
+            animation-range: 10vh;
+        }
+
+        .container {
+            width: 600px;
+            /* Increased width */
+            height: auto;
+            /* Automatically adjust height */
+            background: linear-gradient(132deg,
+                    rgba(255, 255, 255, 0.09) 0%,
+                    rgba(238, 238, 238, 0.03) 20%,
+                    rgba(202, 202, 202, 0.04) 70%,
+                    rgba(171, 171, 171, 0.02) 100%);
+            border: solid rgba(255, 255, 255, 0.13) 1px;
+            color: #ffffff;
+            margin-left: 15px;
+            padding: 20px;
+            /* Added padding for better spacing */
+            position: relative;
+        }
+
+
+        .container::before,
+        .container::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg,
+                    rgba(10, 76, 242, 0) 0%,
+                    rgba(10, 76, 242, 0.95) 38%,
+                    /* Increased opacity */
+                    rgb(0, 102, 255) 50%,
+                    /* Brighter blue */
+                    rgba(10, 76, 242, 0.95) 63%,
+                    /* Increased opacity */
+                    rgba(10, 76, 242, 0) 100%);
+            background-repeat: no-repeat;
+            background-position-y: var(--reflection-y-position);
+            animation: on-scrolling both linear;
+            animation-timeline: scroll();
+            animation-range: 50vh;
+        }
+
+        .container::before {
+            background-size: 1px 150px;
+            filter: blur(1px);
+        }
+
+        .container::after {
+            background-size: 10px 150px;
+            filter: blur(50px);
+        }
+
+
+        main {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40vh;
+            padding-bottom: 40vh;
+        }
+
+        p {
+            background-image: linear-gradient(270deg,
+                    rgb(255, 255, 255) 0%,
+                    rgba(255, 255, 255, 0.9) 90%,
+                    rgb(191, 209, 255) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            padding: 20px;
+            line-height: 1.5em;
+            --opacity-1: 6;
+            --opacity-2: 6;
+            --opacity-3: 6;
+            --opacity-4: 6;
+            --text-offset-1: 10;
+            --text-offset-2: 10;
+            --text-offset-3: 10;
+            --text-offset-4: 10;
+            animation: on-scrolling both linear;
+            animation-timeline: scroll();
+            animation-range: 110vh;
+        }
+
+        p:nth-child(1) {
+            opacity: var(--opacity-1);
+            transform: translateY(calc(var(--text-offset-1) * 1px));
+        }
+
+        p:nth-child(2) {
+            opacity: var(--opacity-2);
+            transform: translateY(calc(var(--text-offset-2) * 1px));
+        }
+
+        p:nth-child(3) {
+            opacity: var(--opacity-3);
+            transform: translateY(calc(var(--text-offset-3) * 1px));
+        }
+
+        p:nth-child(4) {
+            opacity: var(--opacity-4);
+            transform: translateY(calc(var(--text-offset-4) * 1px));
+        }
+
+        @keyframes on-scrolling {
+            0% {
+                --scroll-y-position: -10%;
+                --reflection-y-position: -22%;
+            }
+
+            1% {
+                --scrollbar-color: rgba(255, 255, 255, 0.1);
+            }
+
+            25% {
+                --opacity-1: 1;
+                --opacity-2: 0.1;
+                --opacity-3: 0.1;
+                --opacity-4: 0.1;
+
+                --text-offset-1: 0;
+                --text-offset-2: 10;
+                --text-offset-3: 10;
+                --text-offset-4: 10;
+            }
+
+            50% {
+                --scroll-y-position: 50%;
+                --reflection-y-position: 50%;
+                --opacity-1: 0.1;
+                --opacity-2: 1;
+                --opacity-3: 0.1;
+                --opacity-4: 0.1;
+
+                --text-offset-1: 10;
+                --text-offset-2: 0;
+                --text-offset-3: 10;
+                --text-offset-4: 10;
+            }
+
+            60% {
+                --opacity-1: 0.1;
+                --opacity-2: 0.1;
+                --opacity-3: 1;
+                --opacity-4: 0.1;
+
+                --text-offset-1: 10;
+                --text-offset-2: 10;
+                --text-offset-3: 0;
+                --text-offset-4: 10;
+            }
+
+            90% {
+                --opacity-1: 0.1;
+                --opacity-2: 0.1;
+                --opacity-3: 0.1;
+                --opacity-4: 1;
+
+                --text-offset-1: 10;
+                --text-offset-2: 10;
+                --text-offset-3: 10;
+                --text-offset-4: 0;
+            }
+
+            100% {
+                --text-offset-1: 10;
+                --text-offset-2: 10;
+                --text-offset-3: 10;
+                --text-offset-4: 10;
+                --opacity-1: 0.1;
+                --opacity-2: 0.1;
+                --opacity-3: 0.1;
+                --opacity-4: 0.1;
+                --scroll-y-position: 105%;
+                --reflection-y-position: 115%;
+                --scrollbar-color: rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        img {
+            width: 30%;
+            height: 30%;
+            position: center;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <main>
+        <div class="scrollbar"></div>
+        <div class="container">
+            <img src="WhatsApp Image 2024-10-12 at 08.18.54_a9baec61.jpg" alt="">
+
+            <p>Dear Uncle Har Har, <br><br>
+                Where do I even begin? You are truly a blessing, honestly. I still remember the first day I stepped into
+                your office and actually spoke to you. We barely exchanged three words before I found myself spilling my
+                heart out to you. It's like you have this magic about you—seriously, if you don't open a therapy office,
+                I need to know why!<br><br>
+
+                I got through one of the worst times in my life because of you. No one else was there for me like you
+                were, and honestly, I wouldn’t have it any other way. Sometimes I think maybe my laptop had to break
+                just so I could meet you. You’ve been more than a friend—you’ve been my Uncle Har Har, the one who
+                (reluctantly) tolerates my dancing.<br><br>
+
+                Thank you for always being there, for being present, and for never asking for anything more. I couldn't
+                ask for a better friend, even if God gave me the chance to pick anyone in the world. Even the people I
+                trusted and loved haven’t shown me the sincerity you have.<br><br>
+
+                Okay, before I start crying (because we both know I’m a crybaby), Happy Birthday, Uncle Harris! I wish
+                you nothing but the absolute best in life. May God and others show up for you a million times more than
+                you’ve shown up for me. I pray for your happiness in all aspects of life, and don’t forget—you’ve got to
+                take that trip to the hotel with your babe; it’s very important!<br><br>
+
+                I pray you never have a reason to doubt God or your faith. Wherever you step, grace and glory will
+                follow. Even those who are blessed will look at you and call you blessed.<br><br>
+
+                Thank you for everything. Happy birthday to my best friend (even though you don’t admit it, I’m claiming
+                it). 😊
+
+
+            </p>
+
+            <style>
+                .glass-button {
+                    margin-left: 2em;
+
+                    align-items: center;
+                    justify-content: center;
+                    background: rgba(255, 255, 255, 0.1);
+                    /* Semi-transparent background */
+                    border: 1px solid rgba(255, 255, 255, 0.3);
+                    /* Light border */
+                    border-radius: 10px;
+                    /* Rounded corners */
+                    color: white;
+                    /* Text color */
+                    padding: 10px 20px;
+                    /* Button padding */
+                    font-size: 1em;
+                    /* Font size */
+                    cursor: pointer;
+                    /* Pointer on hover */
+                    backdrop-filter: blur(10px);
+                    /* Blur effect */
+                    transition: background 0.3s, transform 0.3s;
+                    /* Transition for hover effect */
+                }
+
+                .glass-button:hover {
+                    background: rgba(255, 255, 255, 0.2);
+                    /* Darker on hover */
+                    transform: scale(1.05);
+                    /* Slightly increase size on hover */
+                }
+            </style>
+        </div>
+
+    </main>
+    <a href="game4.html"> <button class="glass-button">Next Page</button></a>
+
+</body>
+
+</html>
